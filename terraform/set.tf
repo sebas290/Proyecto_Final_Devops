@@ -152,21 +152,27 @@ resource "aws_rds_cluster_instance" "aurora_instance" {
   tags = { Name = "AuroraInstance" }
 }
 
-resource "aws_instance" "jump_server" {
-  ami           = "ami-0f88e80871fd81e91"
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.publica.id
-  vpc_security_group_ids = [aws_security_group.jump_sg.id]
-  key_name = "vockey"
-  tags = { Name = "JumpServer" }
+resource "aws_instance" "windows_jump_server" {
+  ami                         = "ami-09cb80360d5069de4" # Windows Server 2019 en us-east-1
+  instance_type               = "t2.medium"
+  subnet_id                   = aws_subnet.publica.id
+  vpc_security_group_ids      = [aws_security_group.jump_sg.id]
+  key_name                    = "vockey"
+  associate_public_ip_address = true
+
+  tags = {
+    Name = "WindowsServer"
+  }
 }
 
 resource "aws_instance" "web_server" {
-  ami           = "ami-0f88e80871fd81e91"
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.publica.id
+  ami                    = "ami-0f88e80871fd81e91"
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.publica.id
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-  key_name = "vockey"
-  tags = { Name = "WebServer" }
-}
+  key_name               = "vockey"
 
+  tags = {
+    Name = "WebServer"
+  }
+}
