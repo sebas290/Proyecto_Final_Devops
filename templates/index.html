@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tienda</title>
+  <style>
+    /* Estilos básicos para hacer la página más legible y agradable */
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+    header { background-color: #4CAF50; padding: 10px; text-align: center; color: white; }
+    main { background-color: #fff; padding: 20px; margin-top: 20px; border: 1px solid #ddd; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input[type="text"], input[type="number"] { width: 100%; padding: 8px; margin: 5px 0 15px; }
+    button { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 8px; border-bottom: 1px solid #ddd; text-align: left; }
+    th { background-color: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tienda</h1>
+  </header>
+  <main>
+    <!-- Formulario para agregar un nuevo producto -->
+    <h2>Agregar Producto</h2>
+    <form action="{{ url_for('agregar_producto') }}" method="POST">
+      <label for="nombre">Nombre:</label>
+      <input type="text" name="nombre" id="nombre" required>
+
+      <label for="precio">Precio:</label>
+      <input type="number" name="precio" id="precio" required>
+
+      <label for="descripcion">Descripción:</label>
+      <input type="text" name="descripcion" id="descripcion" required>
+
+      <button type="submit">Agregar</button>
+    </form>
+
+    <!-- Sección para listar los productos existentes -->
+    <h2>Listado de Productos</h2>
+    {% if productos %}
+      <table>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Descripción</th>
+        </tr>
+        {% for prod in productos %}
+        <tr>
+          <td>{{ prod.nombre }}</td>
+          <td>${{ prod.precio }}</td>
+          <td>{{ prod.descripcion }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p><em>No hay productos registrados aún.</em></p>
+    {% endif %}
+  </main>
+  <footer>
+    <p>Aplicación Flask – Tienda </p>
+  </footer>
+</body>
+</html>
