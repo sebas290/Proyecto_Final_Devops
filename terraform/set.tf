@@ -153,7 +153,7 @@ resource "aws_rds_cluster_instance" "aurora_instance" {
 }
 
 resource "aws_instance" "windows_jump_server" {
-  ami                         = "ami-09cb80360d5069de4" # Windows Server 2019 en us-east-1
+  ami                         = "ami-0c798d4b81e585f36" # Windows Server 2019 en us-east-1
   instance_type               = "t2.medium"
   subnet_id                   = aws_subnet.publica.id
   vpc_security_group_ids      = [aws_security_group.jump_sg.id]
@@ -166,7 +166,7 @@ resource "aws_instance" "windows_jump_server" {
 }
 
 resource "aws_instance" "web_server" {
-  ami                    = "ami-0f88e80871fd81e91"
+  ami                    = "ami-084568db4383264d4"
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.publica.id
   vpc_security_group_ids = [aws_security_group.web_sg.id]
