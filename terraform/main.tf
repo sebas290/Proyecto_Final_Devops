@@ -56,6 +56,16 @@ resource "aws_subnet" "private_subnet" {
   }
 }
 
+resource "aws_subnet" "private_subnet_2" {
+  vpc_id            = aws_vpc.main_vpc.id
+  cidr_block        = "10.10.2.0/24"
+  availability_zone = "${var.region}b"
+  tags = {
+    Name = "PrivateSubnet2"
+  }
+}
+
+
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main_vpc.id
   tags = {
@@ -182,11 +192,15 @@ resource "aws_instance" "web_server" {
 
 resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "db-subnet-group"
-  subnet_ids = [aws_subnet.private_subnet.id]
+  subnet_ids = [
+    aws_subnet.private_subnet.id,
+    aws_subnet.private_subnet_2.id
+  ]
   tags = {
     Name = "DBSubnetGroup"
   }
 }
+
 
 resource "aws_rds_cluster" "aurora_cluster" {
   cluster_identifier      = "aurora-cluster"
