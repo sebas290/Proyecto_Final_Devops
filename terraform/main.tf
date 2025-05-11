@@ -205,13 +205,12 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 resource "aws_rds_cluster" "aurora_cluster" {
   cluster_identifier      = "aurora-cluster"
   engine                  = "aurora-mysql"
-  engine_mode             = "serverless"
+  engine_mode             = "provisioned"
   master_username = var.db_username
   master_password = var.db_password
   skip_final_snapshot     = true
   db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
   vpc_security_group_ids  = [aws_security_group.db_sg.id]
-  enable_http_endpoint    = true
   tags = {
     Name = "AuroraCluster"
   }
