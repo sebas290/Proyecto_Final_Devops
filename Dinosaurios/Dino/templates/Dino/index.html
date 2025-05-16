@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda Dino</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+        }
+
+        header {
+            background-color: #2c3e50;
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+            font-size: 2em;
+            letter-spacing: 2px;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .mensaje {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d6e9c6;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #34495e;
+            margin-bottom: 30px;
+        }
+
+        .producto {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fafafa;
+            margin-bottom: 20px;
+        }
+
+        .producto img {
+            width: 120px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .producto h3 {
+            margin: 0 0 10px;
+            color: #2c3e50;
+        }
+
+        .producto p {
+            margin: 0 0 10px;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        input[type="number"] {
+            padding: 6px;
+            width: 70px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #219150;
+        }
+
+        .ver-carrito {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.2em;
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .ver-carrito:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    🦕 Tienda Dino
+</header>
+
+<main>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mensaje">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <h1>Productos Disponibles</h1>
+
+    {% for producto in productos %}
+    <div class="producto">
+        <div>
+            <h3>{{ producto.nombre }}</h3>
+            <p>Precio: ${{ producto.precio }}</p>
+            <p>Stock disponible: {{ producto.stock }}</p>
+            <form action="{% url 'agregar_al_carrito' producto.id %}" method="post">
+                {% csrf_token %}
+                <input type="number" name="cantidad" value="1" min="1" max="{{ producto.stock }}">
+                <button type="submit">Añadir al Carrito</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+
+    <a class="ver-carrito" href="{% url 'ver_carrito' %}">🛒 Ver Carrito</a>
+
+</main>
+</body>
+</html>

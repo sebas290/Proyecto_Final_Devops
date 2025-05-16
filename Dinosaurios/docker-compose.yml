@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=*
+      - DB_NAME=ARK
+      - DB_USER=Equipo5
+      - DB_PASSWORD=Devops28290
+      - DB_HOST=aurora-instance.ccrfirlaj9it.us-east-1.rds.amazonaws.com
+      - DB_PORT=3306
+    volumes:
+      - .:/app
+      - ./global-bundle.pem:/app/global-bundle.pem
+    depends_on: []
