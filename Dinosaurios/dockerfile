@@ -1,0 +1,30 @@
+# Imagen base
+FROM python:3.11-slim
+
+# Variables de entorno
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    gcc \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    default-libmysqlclient-dev \ 
+    pkg-config \       
+    python3-dev \      
+    mariadb-client \ 
+    && rm -rf /var/lib/apt/lists/*  
+# Crear directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos
+COPY . /app/
+
+# Instalar dependencias de Python
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# Comando por defecto
+CMD ["gunicorn", "Dinosaurios.wsgi:application", "--bind", "0.0.0.0:8000"]

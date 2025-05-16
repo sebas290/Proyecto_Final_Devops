@@ -1,0 +1,17 @@
+# Entorno virtual
+venv/
+
+# Archivos pyc y caché
+__pycache__/
+*.pyc
+
+# Archivos de sistema
+.DS_Store
+*.log
+
+# Archivos de base de datos sqlite si quieres
+db.sqlite3
+
+# Configuración local de VSCode o similares
+.vscode/
+
